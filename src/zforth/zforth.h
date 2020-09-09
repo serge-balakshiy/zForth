@@ -3,6 +3,9 @@
 
 #include "zfconf.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __clpusplus */
 /* Abort reasons */
 
 typedef enum {
@@ -43,6 +46,28 @@ typedef enum {
 	ZF_SYSCALL_USER = 128
 } zf_syscall_id;
 
+#define _(s) s "\0"
+
+typedef enum {
+	PRIM_EXIT,    PRIM_LIT,       PRIM_LTZ,  PRIM_COL,     PRIM_SEMICOL,  PRIM_ADD,
+	PRIM_SUB,     PRIM_MUL,       PRIM_DIV,  PRIM_MOD,     PRIM_DROP,     PRIM_DUP,
+	PRIM_PICKR,   PRIM_IMMEDIATE, PRIM_PEEK, PRIM_POKE,    PRIM_SWAP,     PRIM_ROT,
+	PRIM_JMP,     PRIM_JMP0,      PRIM_TICK, PRIM_COMMENT, PRIM_PUSHR,    PRIM_POPR,
+	PRIM_EQUAL,   PRIM_SYS,       PRIM_PICK, PRIM_COMMA,   PRIM_KEY,      PRIM_LITS,
+	PRIM_LEN,     PRIM_AND,
+
+	PRIM_COUNT
+} zf_prim;
+
+static const char prim_names[] =
+	_("exit")    _("lit")        _("<0")    _(":")     _("_;")        _("+")
+	_("-")       _("*")          _("/")     _("%")     _("drop")      _("dup")
+	_("pickr")   _("_immediate") _("@@")    _("!!")    _("swap")      _("rot")
+	_("jmp")     _("jmp0")       _("'")     _("_(")    _(">r")        _("r>")
+	_("=")       _("sys")        _("pick")  _(",,")    _("key")       _("lits")
+	_("##")      _("&");
+
+
 
 /* ZForth API functions */
 
@@ -62,5 +87,12 @@ zf_cell zf_pick(zf_addr n);
 zf_input_state zf_host_sys(zf_syscall_id id, const char *last_word);
 void zf_host_trace(const char *fmt, va_list va);
 zf_cell zf_host_parse_num(const char *buf);
+
+void add_prim(const char *name, zf_prim op);
+void add_uservar(const char *name, zf_addr addr);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif

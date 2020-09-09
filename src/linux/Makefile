@@ -17,7 +17,7 @@ LIBS	+= -lm
 
 ifndef noreadline
 LIBS	+= -lreadline
-CFLAGS	+= -DUSE_READLINE
+CFLAGS	+= -DUSE_READLINE -DZF_ENABLE_BOOTSTRAP
 endif
 
 $(BIN): $(OBJS)

@@ -32,8 +32,9 @@
  * prefixed by an underscore, which is later stripped of when putting the name
  * in the dictionary. */
 
-#define _(s) s "\0"
+/*** #define _(s) s "\0" ***/
 
+/***
 typedef enum {
 	PRIM_EXIT,    PRIM_LIT,       PRIM_LTZ,  PRIM_COL,     PRIM_SEMICOL,  PRIM_ADD,
 	PRIM_SUB,     PRIM_MUL,       PRIM_DIV,  PRIM_MOD,     PRIM_DROP,     PRIM_DUP,
@@ -53,6 +54,7 @@ static const char prim_names[] =
 	_("=")       _("sys")        _("pick")  _(",,")    _("key")       _("lits")
 	_("##")      _("&");
 
+***/
 
 /* Stacks and dictionary memory */
 
@@ -830,7 +832,7 @@ void zf_init(int enable_trace)
  * user variables.
  */
 
-static void add_prim(const char *name, zf_prim op)
+void add_prim(const char *name, zf_prim op)
 {
 	int imm = 0;
 
@@ -845,7 +847,7 @@ static void add_prim(const char *name, zf_prim op)
 	if(imm) make_immediate();
 }
 
-static void add_uservar(const char *name, zf_addr addr)
+void add_uservar(const char *name, zf_addr addr)
 {
 	create(name, 0);
 	dict_add_lit(addr);
